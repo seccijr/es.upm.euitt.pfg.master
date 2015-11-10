@@ -1,25 +1,20 @@
 #include "RegistrarTest.h"
 #include "src/Registrar.h"
-
+#include "src/Message.h"
+#include "mock/FakeRegistrarHandler.h"
 
 void Master::RegistrarTest::TestRegisterSubcriber() {
-    bool called = false;
     String msg_str = String("MESSAGE");
-    void TestFunc(const Message &msg) {
-        called = true;
-    }
-    Message msg = Message(msg_str);
+    MessageClass msg = MessageClass(msg_str);
     String url = String("http://url.com/resource");
-    void (*func)(const Message &);
-    func = &TestFunc;
-
-    reg_.RegisterSubscriber(url, func);
-    reg_.emit(msg);
-    assertEqual(called, true);
+    FakeRegistrarHandlerClass handler = FakeRegistrarHandlerClass();
+    reg_.RegisterSubscriber(url, handler);
+    reg_.Publish(url, msg);
+    assertEqual(handler.called_, true);
 }
 
 void Master::RegistrarTest::setup() {
-    reg_ = Registrar();
+    reg_ = RegistrarClass();
 }
 
 void Master::RegistrarTest::once() {

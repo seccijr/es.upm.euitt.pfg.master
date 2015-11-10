@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "ArduinoUnit.h"
+#include "src/Registrar.h"
 
 namespace Master {
     class RegistrarTest: public TestOnce {
@@ -14,7 +15,7 @@ namespace Master {
             void once();
         private:
             void TestRegisterSubcriber();
-            Registrar reg_;
+            RegistrarClass reg_;
     };
 }
 

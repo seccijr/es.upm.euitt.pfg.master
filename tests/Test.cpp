@@ -1,8 +1,8 @@
 #include "Arduino.h"
 #include "ArduinoUnit.h"
-#include "UrlParserTest.h"
+#include "RegistrarTest.h"
 
-Comm::UrlParserTest parser_test = Comm::UrlParserTest("Comm::UrlParserClass");
+Master::RegistrarTest test = Master::RegistrarTest("Master::RegistrarClass");
 
 void setup() {
     Serial.begin(9600);
