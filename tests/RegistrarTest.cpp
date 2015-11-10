@@ -3,20 +3,32 @@
 #include "src/Message.h"
 #include "mock/FakeRegistrarHandler.h"
 
-void Master::RegistrarTest::TestRegisterSubcriber() {
+using namespace Master;
+
+
+void RegistrarTest::TestRegisterSubcriber() {
     String msg_str = String("MESSAGE");
-    MessageClass msg = MessageClass(msg_str);
-    String url = String("http://url.com/resource");
     FakeRegistrarHandlerClass handler = FakeRegistrarHandlerClass();
-    reg_.RegisterSubscriber(url, handler);
-    reg_.Publish(url, msg);
+
+    Address addr = {};
+    addr.res = {0xFF, 0xFF, 0xFF, 0xFF};
+    addr.dest = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+    reg_.RegisterSubscriber(&addr, handler);
+
+    Packet pckt = {};
+    pckt.method = MMT_POST;
+    Message msg = {};
+    msg.type = MMT_LONG;
+    msg.value.l = 1L;
+    pckt.msg = &msg;
+    reg_.Publish(&addr, &pckt);
     assertEqual(handler.called_, true);
 }
 
-void Master::RegistrarTest::setup() {
+void RegistrarTest::setup() {
     reg_ = RegistrarClass();
 }
 
-void Master::RegistrarTest::once() {
+void RegistrarTest::once() {
     TestRegisterSubcriber();
 }

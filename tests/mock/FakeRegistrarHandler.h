@@ -7,7 +7,7 @@ namespace Master {
     class FakeRegistrarHandlerClass: public EventHandlerClass {
         public:
             FakeRegistrarHandlerClass(): called_(false) {};
-            virtual void Handle(const MessageClass &msg) {
+            virtual void Handle(const Message *msg) {
                 called_ = true;
             }
             bool called_;
