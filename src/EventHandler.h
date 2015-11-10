@@ -7,7 +7,7 @@
 namespace Master {
     class EventHandlerClass {
         public:
-            virtual void Handle(const Message *msg);
+            virtual void Handle(const Packet *pckt) {};
    };
 }
 

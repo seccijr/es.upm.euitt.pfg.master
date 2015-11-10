@@ -9,17 +9,18 @@
 
 namespace Master {
     typedef struct {
-         Address *addr;
-         EventHandlerClass *handler;
+         const Address *addr;
+         const EventHandlerClass *handler;
     } Queue;
 
     class RegistrarClass {
         public:
-            RegistrarClass() {};
-            void RegisterSubscriber(const Address *source, const EventHandlerClass &handler);
+            RegistrarClass(): qsize_(0) {};
+            void RegisterSubscriber(const Address *source, const EventHandlerClass *handler);
             void Publish(const Address *source, const Packet *pckt);
         private:
-
+            Queue q_[MAX_REGNODE];
+            int qsize_;
     };
 }
 

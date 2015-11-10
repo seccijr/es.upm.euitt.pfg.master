@@ -10,10 +10,11 @@ void RegistrarTest::TestRegisterSubcriber() {
     String msg_str = String("MESSAGE");
     FakeRegistrarHandlerClass handler = FakeRegistrarHandlerClass();
 
-    Address addr = {};
-    addr.res = {0xFF, 0xFF, 0xFF, 0xFF};
-    addr.dest = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-    reg_.RegisterSubscriber(&addr, handler);
+    Address addr = {
+        {0xFF, 0xFF, 0xFF, 0xFF},
+        {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
+    };
+    reg_.RegisterSubscriber(&addr, &handler);
 
     Packet pckt = {};
     pckt.method = MMT_POST;
