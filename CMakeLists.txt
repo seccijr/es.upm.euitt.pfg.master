@@ -20,9 +20,11 @@ file(GLOB test_SRCS
 file(GLOB test_HDRS
     "tests/*.h")
 
-generate_arduino_firmware(test
-    SRCS ${master_SRCS} ${test_SRCS}
-    HDRS ${master_HDRS} ${test_HDRS}
-    BOARD uno
-    SERIAL picocom @SERIAL_PORT@ -b 9600 -l
-    PORT  /dev/ttyACM0)
+set(test_SRCS ${master_SRCS} ${test_SRCS})
+set(test_HDRS ${master_HDRS} ${test_HDRS})
+set(test_BOARD uno)
+set(test_SERIAL picocom @SERIAL_PORT@ -b 9600 -l)
+set(test_PORT  /dev/ttyACM0)
+
+
+generate_arduino_firmware(test)
