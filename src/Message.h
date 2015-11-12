@@ -8,7 +8,7 @@
 #define MMT_FLO (0x00 << 3)  // FLOAT
 
 #define MMT_RESID 4  // MAX RESOURCE ID
-#define MMT_ENDPOINT 6  // MAX ENDPOINT ADDR
+#define MMT_ENDPOINT 4  // MAX ENDPOINT ADDR
 
 #define MMT_GET (0x00 << 1)  // GET METHOD
 #define MMT_POST (0x00 << 2)  // POST METHOD
