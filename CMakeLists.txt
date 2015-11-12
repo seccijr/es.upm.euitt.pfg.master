@@ -15,13 +15,14 @@ file(GLOB master_HDRS
     "src/*.h")
 
 file(GLOB test_SRCS
-    "tests/*.cpp")
+    "test/*.cpp")
 
 file(GLOB test_HDRS
-    "tests/*.h")
+    "test/*.h")
 
-include_directories(src tests)
+include_directories(src test)
 
+set(test_SKETCH  ${CMAKE_CURRENT_SOURCE_DIR}/test/test.ino)
 set(test_SRCS ${master_SRCS} ${test_SRCS})
 set(test_HDRS ${master_HDRS} ${test_HDRS})
 set(test_BOARD uno)

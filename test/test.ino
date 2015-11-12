@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <ArduinoUnit.h>
-#include <RegistrarTest.h>
+#include <Master.h>
+#include "RegistrarTest.h"
 
 Master::RegistrarTest test = Master::RegistrarTest("Master::RegistrarClass");
 
