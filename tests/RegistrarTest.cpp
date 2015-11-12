@@ -1,7 +1,6 @@
-#include "RegistrarTest.h"
-#include "src/Registrar.h"
-#include "src/Message.h"
-#include "mock/FakeRegistrarHandler.h"
+#include <RegistrarTest.h>
+#include <Message.h>
+#include <FakeRegistrarHandler.h>
 
 using namespace Master;
 

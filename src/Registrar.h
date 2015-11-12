@@ -1,9 +1,9 @@
 #ifndef _REGISTRAR_H
 #define _REGISTRAR_H
 
-#include "Arduino.h"
-#include "src/Message.h"
-#include "src/EventHandler.h"
+#include <Arduino.h>
+#include <Message.h>
+#include <EventHandler.h>
 
 #define MAX_REGNODE 32
 

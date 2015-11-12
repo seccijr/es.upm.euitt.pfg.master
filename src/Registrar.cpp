@@ -1,4 +1,4 @@
-#include "src/Registrar.h"
+#include <Registrar.h>
 
 using namespace Master;
 

@@ -1,9 +1,9 @@
 #ifndef _REGISTRARTEST_H
 #define _REGISTRARTEST_H
 
-#include "Arduino.h"
-#include "ArduinoUnit.h"
-#include "src/Registrar.h"
+#include <Arduino.h>
+#include <ArduinoUnit.h>
+#include <Registrar.h>
 
 namespace Master {
     class RegistrarTest: public TestOnce {

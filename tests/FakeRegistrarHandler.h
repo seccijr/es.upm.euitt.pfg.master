@@ -1,7 +1,7 @@
 #ifndef _FAKEREGIDSTRARHANDLER_H
 #define _FAKEREGIDSTRARHANDLER_H
 
-#include "src/EventHandler.h"
+#include <EventHandler.h>
 
 namespace Master {
     class FakeRegistrarHandlerClass: public EventHandlerClass {

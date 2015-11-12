@@ -1,7 +1,7 @@
 #ifndef _MESSAGE_H
 #define _MESSAGE_H
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 #define MMT_LONG (0x00 << 1)  // LONG
 #define MMT_STR (0x00 << 2)  // STRING
