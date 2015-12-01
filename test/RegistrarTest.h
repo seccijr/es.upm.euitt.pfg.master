@@ -5,18 +5,15 @@
 #include <ArduinoUnit.h>
 #include <Registrar.h>
 
-namespace Master {
-    class RegistrarTest: public TestOnce {
-        public:
-            RegistrarTest(const char *name): TestOnce(name) {
-                verbosity = TEST_VERBOSITY_ALL;
-            }
-            void setup();
-            void once();
-        private:
-            void TestRegisterSubcriber();
-            RegistrarClass reg_;
-    };
-}
+class RegistrarTest: public TestOnce {
+    public:
+        RegistrarTest(const char *name): TestOnce(name) {
+            verbosity = TEST_VERBOSITY_ALL;
+        }
+        void setup();
+        void once();
+    private:
+        void TestRegisterSubcriber();
+};
 
 #endif

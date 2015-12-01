@@ -8,24 +8,24 @@ register_hardware_platform(${ARDUINO_SDK_PATH}/hardware/arduino/avr/)
 print_board_list()
 print_programmer_list()
 
-file(GLOB master_SRCS
+file(GLOB_RECURSE master_SRCS
     "src/*.cpp")
 
-file(GLOB master_HDRS
+file(GLOB_RECURSE master_HDRS
     "src/*.h")
 
-file(GLOB test_SRCS
+file(GLOB_RECURSE testing_SRCS
     "test/*.cpp")
 
-file(GLOB test_HDRS
+file(GLOB_RECURSE testing_HDRS
     "test/*.h")
 
 include_directories(src test)
 
-set(test_SKETCH  ${CMAKE_CURRENT_SOURCE_DIR}/test/test.ino)
-set(test_SRCS ${master_SRCS} ${test_SRCS})
-set(test_HDRS ${master_HDRS} ${test_HDRS})
-set(test_BOARD uno)
-set(test_PORT  /dev/ttyACM0)
+set(testing_SKETCH  ${CMAKE_CURRENT_SOURCE_DIR}/test/test.ino)
+set(testing_SRCS ${master_SRCS} ${testing_SRCS})
+set(testing_HDRS ${master_HDRS} ${testing_HDRS})
+set(testing_BOARD uno)
+set(testing_PORT  /dev/ttyACM0)
 
-generate_arduino_firmware(test)
+generate_arduino_firmware(testing)

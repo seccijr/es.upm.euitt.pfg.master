@@ -3,7 +3,7 @@
 #include <Master.h>
 #include "RegistrarTest.h"
 
-Master::RegistrarTest test = Master::RegistrarTest("Master::RegistrarClass");
+RegistrarTest test = RegistrarTest("Master::RegistrarClass");
 
 void setup() {
     Serial.begin(9600);

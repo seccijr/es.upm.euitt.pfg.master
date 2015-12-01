@@ -2,13 +2,12 @@
 #define _EVENTHANDLER_H
 
 #include <Arduino.h>
-#include <Message.h>
+#include "utility/master_types.h"
 
-namespace Master {
-    class EventHandlerClass {
-        public:
-            virtual void Handle(const Packet *pckt) {};
-   };
-}
+class EventHandlerClass {
+    public:
+        virtual void handle(const Packet *pckt);
+        virtual unsigned long getId();
+};
 
 #endif
