@@ -2,8 +2,10 @@
 #include <ArduinoUnit.h>
 #include <Master.h>
 #include "RegistrarTest.h"
+#include "VectorSerializerTest.h"
 
-RegistrarTest test = RegistrarTest("Master::RegistrarClass");
+RegistrarTest reg_test = RegistrarTest("Master::RegistrarClass");
+VectorSerializerTest vec_test = VectorSerializerTest("VectorSerializer");
 
 void setup() {
     Serial.begin(9600);

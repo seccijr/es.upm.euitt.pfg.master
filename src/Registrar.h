@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "utility/master_types.h"
 #include "utility/Address.h"
-#include <EventHandler.h>
+#include "EventHandler.h"
 
 #define MAX_REGNODE 32
 

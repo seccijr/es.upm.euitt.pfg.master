@@ -1,6 +1,13 @@
-#include "utility/Address.h"
-#include "utility/master_definitions.h"
+#include "Address.h"
+#include "master_definitions.h"
 #include <IPAddress.h>
+
+AddressClass::AddressClass(const byte *endp) {
+    resource = (byte)MMT_DEF_RESOURCE;
+    for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
+        endpoint[i] = endp[i];
+    }
+}
 
 AddressClass::AddressClass(const byte &res, const byte *endp) {
     resource = res;
@@ -16,4 +23,4 @@ AddressClass::AddressClass(const byte &first, const byte &second, const byte &th
     endpoint[3] = fourth;
 }
 
-AddressClass Localhost = AddressClass((const byte)2000, (const byte[4]){127, 0, 0, 1});
+AddressClass Localhost = AddressClass(MMT_DEF_ENDPOINT);

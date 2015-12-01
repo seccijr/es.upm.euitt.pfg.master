@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <IPAddress.h>
-#include "utility/master_definitions.h"
+#include "master_definitions.h"
 
 typedef struct {
     byte type;
@@ -20,5 +20,11 @@ typedef struct {
     byte method;
     Message message;
 } Packet;
+
+typedef struct {
+    Packet packet;
+    byte source[MMT_ENDPOINT_LEN];
+    byte destination[MMT_ENDPOINT_LEN];
+} Vector;
 
 #endif

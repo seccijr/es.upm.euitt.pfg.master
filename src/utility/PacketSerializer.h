@@ -2,7 +2,7 @@
 #define _PACKETSERIALIZER_H
 
 #include <IPAddress.h>
-#include "utility/master_types.h"
+#include "master_types.h"
 
 class PacketSerializer {
     public:
