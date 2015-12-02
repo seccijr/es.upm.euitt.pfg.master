@@ -17,7 +17,7 @@ void VectorSerializer::serialize(const AddressClass &source, const AddressClass 
     for (int i = 0; i < 4; i++) {
         p.write(destination.endpoint[i]);
     }
-    PacketSerializer::serialize(packet, p);
+    PacketSerializer::serialize(packet, &p);
 }
 
 void VectorSerializer::humanReadable(const Vector &v, Print &p) {

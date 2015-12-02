@@ -42,16 +42,4 @@ typedef struct {
     byte destination[MMT_ENDPOINT_LEN];
 } Vector;
 
-typedef void (*Handler)(const Packet &);
-
-typedef struct {
-    AddressClass addr;
-    Handler handler;
-} HandlerQueueItem;
-
-typedef struct {
-    AddressClass addr;
-    Packet pckt;
-} EventQueueItem;
-
 #endif

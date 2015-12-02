@@ -5,23 +5,29 @@
 #include "utility/master_types.h"
 #include "utility/master_definitions.h"
 #include "utility/Address.h"
+#include "utility/EventHandler.h"
+
+typedef struct {
+    AddressClass addr;
+    EventHandler *handler;
+} HandlerQueueItem;
 
 class RegistrarClass {
     public:
         RegistrarClass(): hqsize_(0), eqsize_(0) {};
-        void releaseSubscriber(const AddressClass &source, void (*handler)(const Packet &));
-        void registerSubscriber(const AddressClass &source, void (*handler)(const Packet &));
-        void publish(const AddressClass &destination, const Packet &pckt);
+        void registerSubscriber(const AddressClass &source, EventHandler *handler);
         void publish(const Vector &v);
         void flushQueue();
-        bool checkPublished(const AddressClass &destination, Packet pckt);
-        bool checkSubscribed(const AddressClass &destination, void (*handler)(const Packet &));
+        bool checkPublished(const Vector &v);
+        bool checkSubscribed(const AddressClass &source, EventHandler *handler);
     private:
-        int getHandlers(const AddressClass &source, Handler *hq);
+        int getHandlers(const AddressClass &source, EventHandler **hq);
         HandlerQueueItem hq_[MMT_MAX_HANDLER_NODES];
-        EventQueueItem eq_[MMT_MAX_PACKETS];
+        Vector eq_[MMT_MAX_PACKETS];
         int hqsize_;
         int eqsize_;
 };
+
+extern RegistrarClass Registrar;
 
 #endif

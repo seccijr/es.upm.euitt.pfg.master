@@ -16,5 +16,6 @@ class AddressClass {
 };
 
 extern AddressClass Localhost;
+extern AddressClass Broadcast;
 
 #endif

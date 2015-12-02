@@ -8,7 +8,7 @@ class PacketSerializer {
     public:
         static void deserialize(Packet *pckt, const byte *buffer);
         static bool checkPacket(const byte *buffer);
-        static void serialize(const Packet &pckt, Print &p);
+        static void serialize(const Packet &pckt, Print *p);
 };
 
 #endif

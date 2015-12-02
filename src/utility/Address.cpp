@@ -39,4 +39,5 @@ bool AddressClass::operator==(AddressClass addr) {
     return same_resource && same_endpoint;
 }
 
-AddressClass Localhost = AddressClass(MMT_DEF_ENDPOINT);
+AddressClass Localhost = AddressClass((byte)MMT_DEF_RESOURCE, MMT_DEF_ENDPOINT);
+AddressClass Broadcast = AddressClass((byte)MMT_BROADCAST_RESOURCE, MMT_BROADCAST_ENDPOINT);

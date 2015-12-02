@@ -1,54 +1,69 @@
 #include "utility/master_types.h"
 #include "utility/Address.h"
 #include "RegistrarTest.h"
-
-bool called = false;
-
-void fakeHandler(const Packet &) {
-    called = true;
-}
+#include "mock/FakeHandler.h"
 
 void RegistrarTest::testRegisterSubcriber() {
     // Arrange
+    FakeHandler fakeHandler;
     RegistrarClass reg = RegistrarClass();
-    const AddressClass addr = AddressClass(0xFF, (const byte[4]){0xFF, 0xFF, 0xFF, 0xFF});
-    Packet pckt = {};
-    pckt.method = MMT_POST;
-    Message msg = {};
-    msg.type = MMT_LONG;
-    msg.value.l = 1L;
-    pckt.message = msg;
+    Message msg = {
+        MMT_LONG,
+        1L
+    };
+    Packet pckt = {
+        0x03,
+        0x04,
+        MMT_POST,
+        msg
+    };
+    Vector v = {
+        pckt,
+        {0x01, 0x01, 0x01, 0x01},
+        {0x02, 0x02, 0x02, 0x02}
+    };
+    AddressClass addr = AddressClass(v.packet.target, v.destination);
 
     // Act
-    reg.registerSubscriber(addr, fakeHandler);
-    reg.publish(addr, pckt);
+    reg.registerSubscriber(addr, &fakeHandler);
+    reg.publish(v);
 
     // Assert
-    bool subscribed = reg.checkSubscribed(addr, fakeHandler);
+    bool subscribed = reg.checkSubscribed(addr, &fakeHandler);
     assertTrue(subscribed);
-    bool published = reg.checkPublished(addr, pckt);
+    bool published = reg.checkPublished(v);
     assertTrue(published);
 }
 
 void RegistrarTest::testFlush() {
     // Arrange
+    int flag = 0;
+    FakeHandler fakeHandler;
     RegistrarClass reg = RegistrarClass();
-    const AddressClass addr = AddressClass(0xFF, (const byte[4]){0xFF, 0xFF, 0xFF, 0xFF});
-    Packet pckt = {};
-    pckt.method = MMT_POST;
-    Message msg = {};
-    msg.type = MMT_LONG;
-    msg.value.l = 1L;
-    pckt.message = msg;
-    called = false;
+    Message msg = {
+        MMT_LONG,
+        1L
+    };
+    Packet pckt = {
+        0x03,
+        0x04,
+        MMT_POST,
+        msg
+    };
+    Vector v = {
+        pckt,
+        {0x01, 0x01, 0x01, 0x01},
+        {0x02, 0x02, 0x02, 0x02}
+    };
+    AddressClass addr = AddressClass(v.packet.target, v.destination);
 
     // Act
-    reg.registerSubscriber(addr, fakeHandler);
-    reg.publish(addr, pckt);
+    reg.registerSubscriber(addr, &fakeHandler);
+    reg.publish(v);
     reg.flushQueue();
 
     // Assert
-    assertTrue(called);
+    assertTrue(fakeHandler.called);
 }
 
 void RegistrarTest::setup() {

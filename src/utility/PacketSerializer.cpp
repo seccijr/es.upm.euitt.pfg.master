@@ -22,12 +22,12 @@ void PacketSerializer::deserialize(Packet *pckt, const byte *buffer) {
     }
 }
 
-void PacketSerializer::serialize(const Packet &pckt, Print &p) {
-    p.write(pckt.origin);
-    p.write(pckt.target);
-    p.write(pckt.method);
-    p.write(pckt.message.type);
+void PacketSerializer::serialize(const Packet &pckt, Print *p) {
+    p->write(pckt.origin);
+    p->write(pckt.target);
+    p->write(pckt.method);
+    p->write(pckt.message.type);
     for (int i = 0; i < 4; i++) {
-        p.write(pckt.message.value.b[i]);
+        p->write(pckt.message.value.b[i]);
     }
 }
