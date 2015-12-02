@@ -2,6 +2,13 @@
 #include "master_definitions.h"
 #include <IPAddress.h>
 
+AddressClass::AddressClass() {
+    resource = 0x00;
+    for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
+        endpoint[i] = 0x00;
+    }
+}
+
 AddressClass::AddressClass(const byte *endp) {
     resource = (byte)MMT_DEF_RESOURCE;
     for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
@@ -21,6 +28,15 @@ AddressClass::AddressClass(const byte &first, const byte &second, const byte &th
     endpoint[1] = second;
     endpoint[2] = third;
     endpoint[3] = fourth;
+}
+
+bool AddressClass::operator==(AddressClass addr) {
+    bool same_resource = resource == addr.resource;
+    bool same_endpoint = true;
+    for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
+        same_endpoint &= endpoint[i] == addr.endpoint[i];
+    }
+    return same_resource && same_endpoint;
 }
 
 AddressClass Localhost = AddressClass(MMT_DEF_ENDPOINT);

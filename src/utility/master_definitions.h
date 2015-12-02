@@ -14,6 +14,8 @@
 #define MMT_PACKET_LEN 8
 #define MMT_VECTOR_LEN 16
 #define MMT_DEF_RESOURCE 2000
+#define MMT_MAX_HANDLER_NODES 32
+#define MMT_MAX_PACKETS 64
 
 const byte MMT_DEF_ENDPOINT[4] = {127, 0, 0, 1};
 

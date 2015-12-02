@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
 set(PROJECT_NAME Master)
 set(ArduinoUnit_RECURSE true)
+set(PORT "/dev/ttyACM0" CACHE STRING "TTY port where the Arduino board is connected.")
 project(${PROJECT_NAME})
 
 register_hardware_platform(${ARDUINO_SDK_PATH}/hardware/arduino/avr/)
-print_board_list()
-print_programmer_list()
+link_directories(${ARDUINO_SDK_PATH}/hardware/arduino/avr/libraries)
 
 file(GLOB_RECURSE master_SRCS
     "src/*.cpp")
@@ -26,6 +26,6 @@ set(testing_SKETCH  ${CMAKE_CURRENT_SOURCE_DIR}/test/test.ino)
 set(testing_SRCS ${master_SRCS} ${testing_SRCS})
 set(testing_HDRS ${master_HDRS} ${testing_HDRS})
 set(testing_BOARD uno)
-set(testing_PORT  /dev/ttyACM0)
+set(testing_PORT ${PORT})
 
 generate_arduino_firmware(testing)

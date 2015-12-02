@@ -5,21 +5,35 @@
 #include <IPAddress.h>
 #include "master_definitions.h"
 
-typedef struct {
+struct MessageStruct {
     byte type;
     union {
         int32_t l;
         float f;
         byte b[4];
     } value;
-} Message;
+    bool operator==(const MessageStruct &msg) {
+        bool same_type = type == msg.type;
+        bool same_value = value.l == msg.value.l;
+        return same_type && same_value;
+    }
+};
+typedef struct MessageStruct Message;
 
-typedef struct {
+struct PacketStruct {
     byte origin;
     byte target;
     byte method;
     Message message;
-} Packet;
+    bool operator==(const PacketStruct &pckt) {
+        bool same_origin = origin == pckt.origin;
+        bool same_target = target == pckt.target;
+        bool same_method = method == pckt.method;
+        bool same_message = message == pckt.message;
+        return same_origin && same_target && same_method && same_message;
+    };
+};
+typedef struct PacketStruct Packet;
 
 typedef struct {
     Packet packet;
