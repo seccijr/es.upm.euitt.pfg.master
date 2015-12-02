@@ -13,7 +13,8 @@ class RegistrarTest: public TestOnce {
         void setup();
         void once();
     private:
-        void TestRegisterSubcriber();
+        void testRegisterSubcriber();
+        void testFlush();
 };
 
 #endif

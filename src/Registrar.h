@@ -6,17 +6,6 @@
 #include "utility/master_definitions.h"
 #include "utility/Address.h"
 
-
-typedef struct {
-    AddressClass addr;
-    void (*handler)(const Packet &);
-} HandlerQueueItem;
-
-typedef struct {
-    AddressClass addr;
-    Packet pckt;
-} EventQueueItem;
-
 class RegistrarClass {
     public:
         RegistrarClass(): hqsize_(0), eqsize_(0) {};
@@ -26,8 +15,9 @@ class RegistrarClass {
         void publish(const Vector &v);
         void flushQueue();
         bool checkPublished(const AddressClass &destination, Packet pckt);
-    private:
         bool checkSubscribed(const AddressClass &destination, void (*handler)(const Packet &));
+    private:
+        int getHandlers(const AddressClass &source, Handler *hq);
         HandlerQueueItem hq_[MMT_MAX_HANDLER_NODES];
         EventQueueItem eq_[MMT_MAX_PACKETS];
         int hqsize_;

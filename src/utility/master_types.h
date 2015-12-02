@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <IPAddress.h>
+#include "Address.h"
 #include "master_definitions.h"
 
 struct MessageStruct {
@@ -40,5 +41,17 @@ typedef struct {
     byte source[MMT_ENDPOINT_LEN];
     byte destination[MMT_ENDPOINT_LEN];
 } Vector;
+
+typedef void (*Handler)(const Packet &);
+
+typedef struct {
+    AddressClass addr;
+    Handler handler;
+} HandlerQueueItem;
+
+typedef struct {
+    AddressClass addr;
+    Packet pckt;
+} EventQueueItem;
 
 #endif

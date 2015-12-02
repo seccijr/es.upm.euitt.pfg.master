@@ -1,7 +1,7 @@
 #include "Registrar.h"
 #include "utility/Address.h"
 
-void RegistrarClass::registerSubscriber(const AddressClass &source, void (*handler)(const Packet &)) {
+void RegistrarClass::registerSubscriber(const AddressClass &source, Handler handler) {
     bool subscribed = checkSubscribed(source, handler);
     if (!subscribed && hqsize_ < MMT_MAX_HANDLER_NODES) {
         HandlerQueueItem item = {source, handler};
@@ -22,10 +22,23 @@ void RegistrarClass::publish(const Vector &v) {
     publish((const AddressClass)addr, (const Packet)v.packet);
 }
 
-bool RegistrarClass::checkSubscribed(const AddressClass &source, void (*handler)(const Packet &)) {
-    for (int i; i < hqsize_; i++) {
+void RegistrarClass::flushQueue() {
+    while (--eqsize_ >= 0) {
+        AddressClass eqaddr = eq_[eqsize_].addr;
+        Packet eqpckt = eq_[eqsize_].pckt;
+        Handler hq[MMT_MAX_HANDLER_NODES] = {0};
+        int nh = getHandlers(eqaddr, hq);
+        for (int i = 0; i < nh; i++) {
+            Handler handler = hq[i];
+            handler(eqpckt);
+        }
+    }
+}
+
+bool RegistrarClass::checkSubscribed(const AddressClass &source, Handler handler) {
+    for (int i = 0; i < hqsize_; i++) {
         AddressClass qaddr = hq_[i].addr;
-        void (*qhandler)(const Packet &)  = hq_[i].handler;
+        Handler qhandler  = hq_[i].handler;
         bool same_address = (AddressClass)source == qaddr;
         bool same_handler = handler == qhandler;
         if (same_address && same_handler) {
@@ -36,7 +49,7 @@ bool RegistrarClass::checkSubscribed(const AddressClass &source, void (*handler)
 }
 
 bool RegistrarClass::checkPublished(const AddressClass &destination, Packet pckt) {
-    for (int i; i < eqsize_; i++) {
+    for (int i = 0; i < eqsize_; i++) {
         AddressClass qaddr = eq_[i].addr;
         Packet qpckt = eq_[i].pckt;
         bool same_address = (AddressClass)destination == qaddr;
@@ -46,4 +59,17 @@ bool RegistrarClass::checkPublished(const AddressClass &destination, Packet pckt
         }
     }
     return false;
+}
+
+int RegistrarClass::getHandlers(const AddressClass &source, Handler *hq) {
+    int j = 0;
+    for (int i = 0; i < hqsize_; i++) {
+        AddressClass qaddr = hq_[i].addr;
+        bool same_address = (AddressClass)source == qaddr;
+        if (same_address && j < MMT_MAX_HANDLER_NODES) {
+            Handler qhandler  = hq_[i].handler;
+            hq[j++] = qhandler;
+        }
+    }
+    return j;
 }
