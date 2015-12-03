@@ -15,6 +15,18 @@ void RegistrarClass::publish(const Vector &v) {
     }
 }
 
+void RegistrarClass::publish(const AddressClass &addr, const Packet &pckt) {
+    Vector v = {};
+    v.packet = pckt;
+    for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
+        v.source[i] = MMT_DEF_ENDPOINT[i];
+        v.destination[i] = addr.endpoint[i];
+    }
+    if (eqsize_ < MMT_MAX_PACKETS) {
+        eq_[eqsize_++] = v;
+    }
+}
+
 void RegistrarClass::flushQueue() {
     while (--eqsize_ >= 0) {
         Vector qv = eq_[eqsize_];

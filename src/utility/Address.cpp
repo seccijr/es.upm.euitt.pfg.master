@@ -31,18 +31,37 @@ AddressClass::AddressClass(const byte &first, const byte &second, const byte &th
 }
 
 bool AddressClass::match(const AddressClass &addr) {
+    bool match_resource = matchResource(addr);
+    bool match_endpoint = matchEndpoint(addr);
+    return match_resource && match_endpoint;
+}
+
+bool AddressClass::matchResource(const byte &res) {
     bool match_resource = false;
-    match_resource |= resource == addr.resource;
+    match_resource |= resource == res;
     match_resource |= resource == MMT_ADD_WILDCARD;
-    match_resource |= addr.resource == MMT_ADD_WILDCARD;
+    match_resource |= res == MMT_ADD_WILDCARD;
+    return match_resource;
+}
+
+bool AddressClass::matchEndpoint(const byte *endp) {
     bool match_endpoint = true;
     for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
         bool match_octect = false;
-        match_octect |= endpoint[i] == addr.endpoint[i];
+        match_octect |= endpoint[i] == endp[i];
         match_octect |= endpoint[i] == MMT_ADD_WILDCARD;
-        match_octect |= addr.endpoint[i] == MMT_ADD_WILDCARD;
+        match_octect |= endp[i] == MMT_ADD_WILDCARD;
         match_endpoint &= match_octect;
     }
+    return match_endpoint;
+}
+
+bool AddressClass::matchResource(const AddressClass &addr) {
+    return matchResource(addr.resource);
+}
+
+bool AddressClass::matchEndpoint(const AddressClass &addr) {
+    return matchEndpoint(addr.endpoint);
 }
 
 bool AddressClass::operator==(AddressClass addr) {

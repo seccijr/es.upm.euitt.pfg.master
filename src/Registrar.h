@@ -17,6 +17,7 @@ class RegistrarClass {
         RegistrarClass(): hqsize_(0), eqsize_(0) {};
         void registerSubscriber(const AddressClass &source, EventHandler *handler);
         void publish(const Vector &v);
+        void publish(const AddressClass &addr, const Packet &pckt);
         void flushQueue();
         bool checkPublished(const Vector &v);
         bool checkSubscribed(const AddressClass &source, EventHandler *handler);

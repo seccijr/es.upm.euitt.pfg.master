@@ -35,6 +35,34 @@ void RegistrarTest::testRegisterSubcriber() {
     assertTrue(published);
 }
 
+void RegistrarTest::testPublishedFromLocal() {
+    // Arrange
+    RegistrarClass reg = RegistrarClass();
+    Message msg = {
+        MMT_LONG,
+        1L
+    };
+    Packet pckt = {
+        0x03,
+        0x04,
+        MMT_POST,
+        msg
+    };
+    Vector v = {
+        pckt,
+        {0x01, 0x01, 0x01, 0x01},
+        {0x02, 0x02, 0x02, 0x02}
+    };
+    AddressClass addr = AddressClass(v.packet.target, v.destination);
+
+    // Act
+    reg.publish(addr, pckt);
+
+    // Assert
+    bool published = reg.checkPublished(v);
+    assertTrue(published);
+}
+
 void RegistrarTest::testFlush() {
     // Arrange
     int flag = 0;
@@ -71,5 +99,6 @@ void RegistrarTest::setup() {
 
 void RegistrarTest::once() {
     testRegisterSubcriber();
+    testPublishedFromLocal();
     testFlush();
 }

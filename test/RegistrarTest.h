@@ -14,6 +14,7 @@ class RegistrarTest: public TestOnce {
         void once();
     private:
         void testRegisterSubcriber();
+        void testPublishedFromLocal();
         void testFlush();
 };
 
