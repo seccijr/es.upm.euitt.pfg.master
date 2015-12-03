@@ -60,8 +60,8 @@ int RegistrarClass::getHandlers(const AddressClass &source, EventHandler **hq) {
     int j = 0;
     for (int i = 0; i < hqsize_; i++) {
         AddressClass qaddr = hq_[i].addr;
-        bool same_address = (AddressClass)source == qaddr;
-        if (same_address && j < MMT_MAX_HANDLER_NODES) {
+        bool match_address = ((AddressClass)source).match(qaddr);
+        if (match_address && j < MMT_MAX_HANDLER_NODES) {
             EventHandler *qhandler  = hq_[i].handler;
             hq[j++] = qhandler;
         }

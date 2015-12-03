@@ -30,6 +30,21 @@ AddressClass::AddressClass(const byte &first, const byte &second, const byte &th
     endpoint[3] = fourth;
 }
 
+bool AddressClass::match(const AddressClass &addr) {
+    bool match_resource = false;
+    match_resource |= resource == addr.resource;
+    match_resource |= resource == MMT_ADD_WILDCARD;
+    match_resource |= addr.resource == MMT_ADD_WILDCARD;
+    bool match_endpoint = true;
+    for (int i = 0; i < MMT_ENDPOINT_LEN; i++) {
+        bool match_octect = false;
+        match_octect |= endpoint[i] == addr.endpoint[i];
+        match_octect |= endpoint[i] == MMT_ADD_WILDCARD;
+        match_octect |= addr.endpoint[i] == MMT_ADD_WILDCARD;
+        match_endpoint &= match_octect;
+    }
+}
+
 bool AddressClass::operator==(AddressClass addr) {
     bool same_resource = resource == addr.resource;
     bool same_endpoint = true;

@@ -55,7 +55,7 @@ void RegistrarTest::testFlush() {
         {0x01, 0x01, 0x01, 0x01},
         {0x02, 0x02, 0x02, 0x02}
     };
-    AddressClass addr = AddressClass(v.packet.target, v.destination);
+    AddressClass addr = AddressClass('*', (const byte[4]){0x02, '*', 0x02, '*'});
 
     // Act
     reg.registerSubscriber(addr, &fakeHandler);

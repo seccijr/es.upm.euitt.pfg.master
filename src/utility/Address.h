@@ -11,6 +11,7 @@ class AddressClass {
         AddressClass(const byte *endpoint);
         AddressClass(const byte &resource, const byte *endpoint);
         AddressClass(const byte &first, const byte &second, const byte &third, const byte &fourth);
+        bool match(const AddressClass &addr);
         bool operator==(AddressClass addr);
         byte resource, endpoint[MMT_ENDPOINT_LEN];
 };
