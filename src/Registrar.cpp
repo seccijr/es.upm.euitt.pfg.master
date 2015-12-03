@@ -28,7 +28,8 @@ void RegistrarClass::publish(const AddressClass &addr, const Packet &pckt) {
 }
 
 void RegistrarClass::flushQueue() {
-    while (--eqsize_ >= 0) {
+    while (eqsize_ > 0) {
+        eqsize_--;
         Vector qv = eq_[eqsize_];
         AddressClass eqaddr = AddressClass(qv.packet.target, qv.destination);
         EventHandler *hq[MMT_MAX_HANDLER_NODES];
