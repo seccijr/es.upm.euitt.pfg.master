@@ -4,7 +4,7 @@
 #include "RegistrarTest.h"
 #include "VectorSerializerTest.h"
 
-RegistrarTest reg_test = RegistrarTest("Master::RegistrarClass");
+RegistrarTest reg_test = RegistrarTest("RegistrarClass");
 VectorSerializerTest vec_test = VectorSerializerTest("VectorSerializer");
 
 void setup() {
