@@ -10,6 +10,15 @@ void VectorSerializer::deserialize(Vector *v, const byte *buffer) {
     v->packet = pckt;
 }
 
+void VectorSerializer::deserialize(Vector *v, Stream *s) {
+    int i = 0;
+    byte buffer[MMT_VECTOR_LEN] = {0};
+    while (s->available() > 0) {
+        buffer[i++] = s->read();
+    }
+    VectorSerializer::deserialize(v, (const byte *)buffer);
+}
+
 void VectorSerializer::serialize(const AddressClass &source, const AddressClass &destination, const Packet &packet, Print &p) {
     for (int i = 0; i < 4; i++) {
         p.write(source.endpoint[i]);
