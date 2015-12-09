@@ -12,13 +12,13 @@ void VectorSerializerTest::TestDeserialize() {
     Vector v;
     VectorSerializer::deserialize(&v, buffer);
     for (int i = 0; i < 4; i++) {
-        assertTrue(v.source[i] == buffer[i]);
+        assertTrue(v.direction.source.endpoint[i] == buffer[i]);
     }
     for (int i = 0; i < 4; i++) {
-        assertTrue(v.destination[i] == buffer[i + 4]);
+        assertTrue(v.direction.destination.endpoint[i] == buffer[i + 4]);
     }
-    assertTrue(v.packet.origin == buffer[8]);
-    assertTrue(v.packet.target == buffer[9]);
+    assertTrue(v.direction.source.resource == buffer[8]);
+    assertTrue(v.direction.destination.resource == buffer[9]);
     assertTrue(v.packet.method == buffer[10]);
     assertTrue(v.packet.message.type == buffer[11]);
     char hola[5] = {0};

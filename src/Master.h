@@ -4,7 +4,6 @@
 #include "Registrar.h"
 #include "utility/master_types.h"
 #include "utility/master_definitions.h"
-#include "utility/Address.h"
 #include "utility/EventHandler.h"
 #include "utility/PacketSerializer.h"
 #include "utility/VectorSerializer.h"

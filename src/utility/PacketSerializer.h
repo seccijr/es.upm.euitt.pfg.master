@@ -1,7 +1,6 @@
 #ifndef _PACKETSERIALIZER_H
 #define _PACKETSERIALIZER_H
 
-#include <IPAddress.h>
 #include "master_types.h"
 
 class PacketSerializer {

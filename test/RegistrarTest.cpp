@@ -1,5 +1,4 @@
 #include "utility/master_types.h"
-#include "utility/Address.h"
 #include "RegistrarTest.h"
 #include "mock/FakeHandler.h"
 
@@ -7,29 +6,37 @@ void RegistrarTest::testRegisterSubcriber() {
     // Arrange
     FakeHandler fakeHandler;
     RegistrarClass reg = RegistrarClass();
+    Address source = {
+        0x03,
+        {0x01, 0x01, 0x01, 0x01}
+    };
+    Address destination = {
+        0x04,
+        {0x02, 0x02, 0x02, 0x02}
+    };
     Message msg = {
         MMT_LONG,
         1L
     };
     Packet pckt = {
-        0x03,
-        0x04,
         MMT_POST,
         msg
     };
+    Direction drct = {
+        source,
+        destination
+    };
     Vector v = {
         pckt,
-        {0x01, 0x01, 0x01, 0x01},
-        {0x02, 0x02, 0x02, 0x02}
+        drct
     };
-    AddressClass addr = AddressClass(v.packet.target, v.destination);
 
     // Act
-    reg.registerSubscriber(addr, &fakeHandler);
+    reg.registerSubscriber(v.direction, &fakeHandler);
     reg.publish(v);
 
     // Assert
-    bool subscribed = reg.checkSubscribed(addr, &fakeHandler);
+    bool subscribed = reg.checkSubscribed(v.direction, &fakeHandler);
     assertTrue(subscribed);
     bool published = reg.checkPublished(v);
     assertTrue(published);
@@ -38,25 +45,33 @@ void RegistrarTest::testRegisterSubcriber() {
 void RegistrarTest::testPublishedFromLocal() {
     // Arrange
     RegistrarClass reg = RegistrarClass();
+    Address source = {
+        0x03,
+        {0x01, 0x01, 0x01, 0x01}
+    };
+    Address destination = {
+        0x04,
+        {0x02, 0x02, 0x02, 0x02}
+    };
     Message msg = {
         MMT_LONG,
         1L
     };
     Packet pckt = {
-        0x03,
-        0x04,
         MMT_POST,
         msg
     };
+    Direction drct = {
+        source,
+        destination
+    };
     Vector v = {
         pckt,
-        {0x01, 0x01, 0x01, 0x01},
-        {0x02, 0x02, 0x02, 0x02}
+        drct
     };
-    AddressClass addr = AddressClass(v.packet.target, v.destination);
 
     // Act
-    reg.publish(addr, pckt);
+    reg.publish(v);
 
     // Assert
     bool published = reg.checkPublished(v);
@@ -68,22 +83,34 @@ void RegistrarTest::testFlush() {
     int flag = 0;
     FakeHandler fakeHandler;
     RegistrarClass reg = RegistrarClass();
+    Address source = {
+        0x03,
+        {0x01, 0x01, 0x01, 0x01}
+    };
+    Address destination = {
+        0x04,
+        {0x02, 0x02, 0x02, 0x02}
+    };
     Message msg = {
         MMT_LONG,
         1L
     };
     Packet pckt = {
-        0x03,
-        0x04,
         MMT_POST,
         msg
     };
+    Direction drct = {
+        source,
+        destination
+    };
     Vector v = {
         pckt,
-        {0x01, 0x01, 0x01, 0x01},
-        {0x02, 0x02, 0x02, 0x02}
+        drct
     };
-    AddressClass addr = AddressClass('*', (const byte[4]){0x02, '*', 0x02, '*'});
+    Address addr = {
+        '*',
+        {0x02, '*', 0x02, '*'}
+    };
 
     // Act
     reg.registerSubscriber(addr, &fakeHandler);
