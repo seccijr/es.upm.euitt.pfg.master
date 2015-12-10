@@ -75,7 +75,6 @@ extern Address Wildcard;
 struct DirectionStruct {
     Address source;
     Address destination;
-    Message message;
     bool  match(const DirectionStruct &drct) {
         bool match_source = source.match(drct.source);
         bool match_destination = destination.match(drct.destination);
