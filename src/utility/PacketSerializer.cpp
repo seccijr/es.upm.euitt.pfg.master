@@ -11,6 +11,15 @@ bool PacketSerializer::checkPacket(const byte *buffer) {
     return false;
 }
 
+void PacketSerializer::deserialize(Packet *pckt, Stream *s) {
+    int i = 0;
+    byte buffer[MMT_PACKET_LEN] = {0};
+    while (s->available() > 0) {
+        buffer[i++] = s->read();
+    }
+    PacketSerializer::deserialize(pckt, (const byte *)buffer);
+}
+
 void PacketSerializer::deserialize(Packet *pckt, const byte *buffer) {
     pckt->method = buffer[0];
     pckt->message.type = buffer[1];
