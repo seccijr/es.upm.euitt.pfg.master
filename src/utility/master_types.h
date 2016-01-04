@@ -70,6 +70,7 @@ typedef struct AddressStruct Address;
 
 extern Address Localhost;
 extern Address Broadcast;
+extern Address Netcast;
 extern Address Wildcard;
 
 struct DirectionStruct {

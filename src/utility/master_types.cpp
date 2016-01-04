@@ -10,6 +10,11 @@ Address Broadcast = {
     {255, 255, 255, 255}
 };
 
+Address Netcast = {
+    MMT_ADD_WILDCARD,
+    {255, 255, 255, 255}
+};
+
 Address Wildcard = {
     MMT_ADD_WILDCARD,
     {MMT_ADD_WILDCARD, MMT_ADD_WILDCARD, MMT_ADD_WILDCARD, MMT_ADD_WILDCARD}
